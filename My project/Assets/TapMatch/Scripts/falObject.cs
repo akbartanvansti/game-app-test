@@ -24,6 +24,9 @@ public class falObject : MonoBehaviour
 
     void Update()
     {
+        if (Gameplay.Instance != null && Gameplay.Instance.isGameOver)
+            return; // ⛔ stop spawn saat game selesai
+
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
