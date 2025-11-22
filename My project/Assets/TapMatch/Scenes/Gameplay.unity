@@ -3774,6 +3774,7 @@ GameObject:
   - component: {fileID: 1144847243}
   - component: {fileID: 1144847245}
   - component: {fileID: 1144847246}
+  - component: {fileID: 1144847247}
   m_Layer: 0
   m_Name: ManagerGameplay
   m_TagString: Untagged
@@ -3800,6 +3801,7 @@ MonoBehaviour:
   spawnAreaObject: {fileID: 1311263462}
   spawnInterval: 1
   yOffset: 1
+  destroyOffsetY: -2
 --- !u!4 &1144847244
 Transform:
   m_ObjectHideFlags: 0
@@ -3835,7 +3837,7 @@ MonoBehaviour:
   highScoreText: {fileID: 2054410466}
   timeUI: {fileID: 1769468269}
   timeText: {fileID: 1330574796}
-  fastModeDuration: 180
+  fastModeDuration: 10
   stopGameWindow: {fileID: 1230802169}
   stopHeaderText: {fileID: 1112338039}
   stopScoreText: {fileID: 879306350}
@@ -3864,6 +3866,19 @@ MonoBehaviour:
   mainUI: {fileID: 8376930}
   modeWindow: {fileID: 629639528}
   objectGameplay: {fileID: 336011491}
+--- !u!114 &1144847247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144847242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de819bdafda86e74a946e83c7f46ae43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyY: -10
 --- !u!1 &1145668409
 GameObject:
   m_ObjectHideFlags: 0
@@ -4615,7 +4630,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0008385703, y: 0.016023561}
+  m_Offset: {x: 0.0008385703, y: -0.0887066}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -4625,7 +4640,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.13417993, y: 0.14852996}
+  m_Size: {x: 0.13417993, y: 0.35799024}
   m_EdgeRadius: 0
 --- !u!1 &1330574794
 GameObject:

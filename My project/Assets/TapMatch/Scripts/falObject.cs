@@ -15,17 +15,34 @@ public class falObject : MonoBehaviour
     public float spawnInterval = 1.5f;
     public float yOffset = 0f;
 
+    [Header("Batas hapus objek (opsional)")]
+    public float destroyOffsetY = -2f;
+
     private float timer;
+    private float areaBottomY;
 
     void Start()
     {
         timer = spawnInterval;
+
+        if (spawnAreaObject != null)
+        {
+            BoxCollider2D col = spawnAreaObject.GetComponent<BoxCollider2D>();
+            if (col != null)
+            {
+                float bottom = col.transform.position.y
+                             + col.offset.y
+                             - (col.size.y * col.transform.lossyScale.y / 2f);
+
+                areaBottomY = bottom + destroyOffsetY;
+            }
+        }
     }
 
     void Update()
     {
         if (Gameplay.Instance != null && Gameplay.Instance.isGameOver)
-            return; // ⛔ stop spawn saat game selesai
+            return;
 
         timer -= Time.deltaTime;
         if (timer <= 0f)
@@ -39,18 +56,17 @@ public class falObject : MonoBehaviour
     {
         if (spawnAreaObject == null)
         {
-            Debug.LogWarning("⚠️ spawnAreaObject belum diatur di Inspector!");
+            Debug.LogWarning("spawnAreaObject belum diatur di Inspector!");
             return;
         }
 
         BoxCollider2D areaCollider = spawnAreaObject.GetComponent<BoxCollider2D>();
         if (areaCollider == null)
         {
-            Debug.LogWarning("⚠️ spawnAreaObject tidak memiliki BoxCollider2D!");
+            Debug.LogWarning("spawnAreaObject tidak memiliki BoxCollider2D!");
             return;
         }
 
-        // 🎯 Hitung posisi acak di area spawn
         float areaTopY = areaCollider.transform.position.y
                         + areaCollider.offset.y
                         + (areaCollider.size.y * areaCollider.transform.lossyScale.y / 2f);
@@ -60,7 +76,6 @@ public class falObject : MonoBehaviour
         float randomX = Random.Range(areaCenterX - halfWidth, areaCenterX + halfWidth);
         float spawnY = areaTopY + yOffset;
 
-        // 🎨 Pilih object sumber (inactive di scene)
         int rand = Random.Range(0, 4);
         GameObject sourceObject = null;
         string warna = "";
@@ -75,19 +90,16 @@ public class falObject : MonoBehaviour
 
         if (sourceObject == null)
         {
-            Debug.LogWarning($"⚠️ Objek sumber untuk warna {warna} belum diatur!");
+            Debug.LogWarning($"Objek sumber untuk warna {warna} belum diatur!");
             return;
         }
 
-        // Ambil Z posisi dari object sumber
         float spawnZ = sourceObject.transform.position.z;
         Vector3 spawnPos = new Vector3(randomX, spawnY, spawnZ);
 
-        // 🧱 Salin dari object scene (bukan prefab)
         GameObject newObj = Instantiate(sourceObject, spawnPos, sourceObject.transform.rotation);
-        newObj.SetActive(true); // aktifkan hasil instansiasi
+        newObj.SetActive(true);
 
-        // 🔽 Tambahkan Rigidbody kalau belum ada
         Rigidbody2D rb = newObj.GetComponent<Rigidbody2D>();
         if (rb == null)
             rb = newObj.AddComponent<Rigidbody2D>();
@@ -95,14 +107,20 @@ public class falObject : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = Gameplay.Instance.GetSpeedForCurrentLevel();
 
-        // 🧠 Pastikan FallingObject ada
         FallingObject fo = newObj.GetComponent<FallingObject>();
         if (fo == null)
             fo = newObj.AddComponent<FallingObject>();
 
         fo.colorName = warna;
 
-        Debug.Log($"🧩 Spawned '{warna}' pada posisi (X={spawnPos.x:F2}, Y={spawnPos.y:F2}, Z={spawnZ:F2})");
+        // ✅ AutoDestroy
+        AutoDestroy ad = newObj.GetComponent<AutoDestroy>();
+        if (ad == null)
+            ad = newObj.AddComponent<AutoDestroy>();
+
+        ad.destroyY = areaBottomY;
+
+        Debug.Log($"Spawned '{warna}' pada posisi (X={spawnPos.x:F2}, Y={spawnPos.y:F2}, Z={spawnZ:F2})");
     }
 
     void OnDrawGizmosSelected()

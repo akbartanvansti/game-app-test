@@ -83,6 +83,8 @@ public class Gameplay : MonoBehaviour
 
         isGameOver = true;
 
+        DestroyAllFallingObjects(); // ✅ tambahkan ini
+
         Debug.Log("❌ Salah warna → GAME STOP (Mode Normal)");
         ShowStopGame("Permainan Selesai");
     }
@@ -125,8 +127,22 @@ public class Gameplay : MonoBehaviour
 
         isGameOver = true;
 
+        DestroyAllFallingObjects();
+
         Debug.Log("⏳ Waktu habis → GAME STOP (Mode Cepat)");
         ShowStopGame("Waktu Habis");
+
+        // Nonaktifkan Script pada manager gameplay dan falObject
+        if (managerGameplay != null)
+        {
+            Gameplay gp = managerGameplay.GetComponentInChildren<Gameplay>();
+            if (gp != null)
+                gp.enabled = false;
+
+            falObject fo = managerGameplay.GetComponentInChildren<falObject>();
+            if (fo != null)
+                fo.enabled = false;
+        }
     }
 
     // ----------------------------------------------------------
@@ -206,6 +222,9 @@ public class Gameplay : MonoBehaviour
 
     public void ShowStopGame(string header)
     {
+        // Pastikan semua objek jatuh dihapus sebelum menampilkan layar berhenti
+        DestroyAllFallingObjects();
+
         if (stopGameWindow == null)
         {
             Debug.LogError("❌ stopGameWindow belum diassign!");
@@ -241,4 +260,15 @@ public class Gameplay : MonoBehaviour
         Debug.Log("📌 Menampilkan StopGame: " + header);
     }
 
+   void DestroyAllFallingObjects()
+{
+    var fallingObjects = FindObjectsByType<FallingObject>(FindObjectsSortMode.None);
+
+    foreach (var obj in fallingObjects)
+    {
+        Destroy(obj.gameObject);
+    }
+
+    Debug.Log($"🧹 Menghapus {fallingObjects.Length} objek jatuh dari scene");
+}
 }
