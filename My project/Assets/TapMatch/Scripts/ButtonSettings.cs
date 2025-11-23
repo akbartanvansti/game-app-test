@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ButtonBack : MonoBehaviour
+public class ButtonSettings : MonoBehaviour
 {
     public GameObject ObjectCurrent;
     public GameObject background2;
@@ -25,29 +25,29 @@ public class ButtonBack : MonoBehaviour
         }
     }
 
-    public void Back()
+    public void OpenSettings()
     {
         // --- 1. Mainkan Suara Tombol ---
         if (audioManager != null)
         {
-            // Panggil SFX 'button'
+            // Pastikan AudioManager.sfxSource sudah diubah menjadi 'public'
+            // agar bisa diakses tanpa error CS0122.
             audioManager.sfxSource.PlayOneShot(audioManager.button);
         }
         
-        // --- 2. Logika Utama (Aksi Kembali) ---
+        // --- 2. Logika Utama (Aksi Navigasi) ---
         
-        // Nonaktifkan object saat ini
+        // aktifkan object saat ini (mungkin ini maksudnya ObjectSettings)
         if (ObjectCurrent != null)
-            ObjectCurrent.SetActive(false);
-
-        // Aktifkan kembali Background kedua (jika digunakan)
+            ObjectCurrent.SetActive(true);
+            
+        // Menonaktifkan objek/UI lainnya
         if (background2 != null)
-            background2.SetActive(true);
+            background2.SetActive(false);
 
-        // Aktifkan kembali Main UI
         if (mainUI != null)
-            mainUI.SetActive(true);
+            mainUI.SetActive(false);
 
-        Debug.Log("↩️ Kembali ke Main UI");
+        Debug.Log("ℹ Menampilkan halaman Settings");
     }
 }
