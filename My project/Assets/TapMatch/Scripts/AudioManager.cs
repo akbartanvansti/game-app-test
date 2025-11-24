@@ -13,9 +13,29 @@ public class AudioManager : MonoBehaviour
     public AudioClip lobby;//music
     public AudioClip scoring;
 
-    public void Start()
+    public static AudioManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
     {
         musicSource.clip = lobby;
         musicSource.Play();
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        sfxSource.PlayOneShot(clip);
     }
 }
