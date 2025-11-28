@@ -31,6 +31,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         musicSource.clip = lobby;
+        musicSource.loop = true;
         musicSource.Play();
     }
 

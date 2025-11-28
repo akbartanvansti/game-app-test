@@ -5,6 +5,13 @@ public class FallingObject : MonoBehaviour
     [HideInInspector] public string colorName;
     private Rigidbody2D rb;
 
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,8 +38,9 @@ public class FallingObject : MonoBehaviour
 
         if (area.areaName == colorName)
         {
-            Gameplay.Instance.AddScore(1);
+            Gameplay.Instance.AddScore(10);
             Destroy(gameObject);
+            audioManager.PlaySFX(audioManager.scoring);
         }
         else
         {

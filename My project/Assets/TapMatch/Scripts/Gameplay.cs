@@ -34,6 +34,9 @@ public class Gameplay : MonoBehaviour
 
     private float timer;
 
+    // Tambahkan reference untuk AudioManager
+    private AudioManager audioManager;
+
     [Header("Level & Kecepatan Jatuh")]
     public float[] levelSpeeds = { 1f, 1.5f, 2f, 2.5f, 3f };
     public int[] scoreThresholds = { 10, 25, 50, 80 };
@@ -49,7 +52,22 @@ public class Gameplay : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        // --- 1. Cari AudioManager saat Awake ---
+        GameObject audioManagerObject = GameObject.FindWithTag("Audio");
+        if (audioManagerObject != null)
+        {
+            audioManager = audioManagerObject.GetComponent<AudioManager>();
+        }
+        else
+        {
+            Debug.LogError("❌ Objek AudioManager dengan Tag 'Audio' tidak ditemukan di scene!");
+        }
+        
+        // --- 2. Inisialisasi AdMob SDK dan Muat Iklan ---
+        // KODE INIT ADS DIHAPUS KARENA SUDAH DILAKUKAN OLEH AdManager.cs DI FUNGSI Start/Awake-nya
     }
+
 
     void Start()
     {
@@ -231,6 +249,14 @@ public class Gameplay : MonoBehaviour
             return;
         }
 
+        // --- PENTING: Tampilkan Iklan Interstitial saat Game Over ---
+        // Panggil Iklan menggunakan Singleton AdManager.Instance
+        if (AdManager.Instance != null)
+        {
+            AdManager.Instance.ShowInterstialAd(); // <-- Menggunakan fungsi yang ada di AdManager.cs
+        }
+
+
         // Nonaktifkan gameplay object
         objectGameplay.SetActive(false);
 
@@ -248,6 +274,12 @@ public class Gameplay : MonoBehaviour
             fo.enabled = false;
 
         stopGameWindow.SetActive(true);
+
+        if (audioManager != null)
+        {
+            // Panggil SFX 'end'
+            audioManager.sfxSource.PlayOneShot(audioManager.end);
+        }
 
         // update judul
         if (stopHeaderText != null)

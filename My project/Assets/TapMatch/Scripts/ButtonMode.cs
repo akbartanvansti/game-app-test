@@ -15,8 +15,36 @@ public class ButtonMode : MonoBehaviour
     [Header("Mode Pilihan")]
     public bool isTimeMode = false; // normal=false, cepat=true
 
+    // Tambahkan reference untuk AudioManager
+    AudioManager audioManager; 
+
+    public void Start()
+    {
+        // Cari objek AudioManager menggunakan Tag "Audio"
+        GameObject audioManagerObject = GameObject.FindWithTag("Audio");
+
+        if (audioManagerObject != null)
+        {
+            // Dapatkan komponen AudioManager
+            audioManager = audioManagerObject.GetComponent<AudioManager>();
+        }
+        else
+        {
+            Debug.LogError("❌ Objek AudioManager dengan Tag 'Audio' tidak ditemukan di scene!");
+        }
+    }
+
     public void SelectMode()
     {
+        // --- 1. Mainkan Suara Tombol ---
+        if (audioManager != null)
+        {
+            // Panggil SFX 'button'
+            audioManager.sfxSource.PlayOneShot(audioManager.button);
+        }
+        
+        // --- 2. Logika Utama Seleksi Mode ---
+
         // aktifkan gameplay object
         objectGameplay.SetActive(true);
 
