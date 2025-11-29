@@ -14,17 +14,11 @@ public class AdManager : MonoBehaviour
 #if UNITY_ANDROID
     private string bannerAdUnitId = "ca-app-pub-3940256099942544/6300978111";
     private string interestitialAdUnitId = "ca-app-pub-3940256099942544/1033173712";
-    //private string bannerAdUnitId = "ca-app-pub-3160311132157432/3193166785";
-    //private string interestitialAdUnitId = "ca-app-pub-3160311132157432/9691960678";
-    //private string rewardedAdUnitId = "ca-app-pub-3940256099942544/5224354917";
-    //private string nativeAdUnitId = "ca-app-pub-3940256099942544/2247696110";
+    
 #elif UNITY_IPHONE
     private string bannerAdUnitId = "ca-app-pub-3940256099942544/2934735716";
     private string interestitialAdUnitId = "ca-app-pub-3940256099942544/4411468910";
-    //private string bannerAdUnitId = "ca-app-pub-3160311132157432/5589882375";
-    //private string interestitialAdUnitId = "ca-app-pub-3160311132157432/6606632334";
-    //private string rewardedAdUnitId = "ca-app-pub-3940256099942544/1712485313";
-    //private string nativeAdUnitId = "ca-app-pub-3940256099942544/3986624511";
+    
 #else
     private string bannerAdUnitId = "unused";
     private string interestitialAdUnitId = "unused";
