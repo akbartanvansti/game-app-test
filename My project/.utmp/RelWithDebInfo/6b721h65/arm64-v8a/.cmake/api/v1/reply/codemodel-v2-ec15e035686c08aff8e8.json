@@ -95,14 +95,14 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "game::@d02bb112ea9f9c2ed29f",
-					"jsonFile" : "target-game-RelWithDebInfo-42c04f9c52cdc5bfaaca.json",
+					"jsonFile" : "target-game-RelWithDebInfo-266059eb12128e156eb5.json",
 					"name" : "game",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "swappywrapper::@7e25bd1f32ce224db4e9",
-					"jsonFile" : "target-swappywrapper-RelWithDebInfo-73cdcb9cdb054b3e671f.json",
+					"jsonFile" : "target-swappywrapper-RelWithDebInfo-344576c75766348f0a94.json",
 					"name" : "swappywrapper",
 					"projectIndex" : 2
 				}
@@ -112,7 +112,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "E:/Unity Project/game-app-test/My project/.utmp/RelWithDebInfo/6b721h65/armeabi-v7a",
+		"build" : "E:/Unity Project/game-app-test/My project/.utmp/RelWithDebInfo/6b721h65/arm64-v8a",
 		"source" : "E:/Unity Project/game-app-test/My project/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp"
 	},
 	"version" : 
